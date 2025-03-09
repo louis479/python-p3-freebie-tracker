@@ -1,9 +1,26 @@
-#!/usr/bin/env python3
+from database import SessionLocal
+from models import Company, Dev, Freebie
 
-from sqlalchemy import create_engine
+session = SessionLocal()
 
-from models import Company, Dev
+# Fetch instances to test relationships
+dev = session.query(Dev).first()
+company = session.query(Company).first()
+freebie = session.query(Freebie).first()
 
-if __name__ == '__main__':
-    engine = create_engine('sqlite:///freebies.db')
-    import ipdb; ipdb.set_trace()
+if dev:
+    print(f"Dev: {dev.name}")
+else:
+    print("No developers found in the database.")
+
+if company:
+    print(f"Company: {company.name}")
+else:
+    print("No companies found in the database.")
+
+if freebie:
+    print(f"Freebie: {freebie.print_details()}")
+else:
+    print("No freebies found in the database.")
+
+session.close()
